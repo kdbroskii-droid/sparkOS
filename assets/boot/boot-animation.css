@@ -1,0 +1,1 @@
+.sparkos-boot{background:#20252b}.sparkos-mark{animation:spark-pulse 2.2s ease-in-out infinite}.sparkos-wordmark{animation:wordmark-in 1.2s ease-out both}@keyframes spark-pulse{0%,100%{transform:scale(.82);opacity:.55}50%{transform:scale(1);opacity:1}}@keyframes wordmark-in{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
