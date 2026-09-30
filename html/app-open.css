@@ -1,0 +1,4 @@
+/* Separate SparkOS app-opening animation. */
+.spark-app-window{transform-origin:center center;animation:spark-app-open 280ms cubic-bezier(.2,.85,.25,1) both}
+@keyframes spark-app-open{0%{opacity:0;transform:scale(.94);filter:blur(3px)}72%{opacity:1;transform:scale(1.012);filter:blur(0)}100%{opacity:1;transform:scale(1);filter:blur(0)}}
+@media (prefers-reduced-motion:reduce){.spark-app-window{animation:none}}
