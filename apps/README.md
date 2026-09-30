@@ -1,12 +1,7 @@
-# SparkOS App Icons
+# SparkOS Apps
 
-This folder contains icons belonging to individual SparkOS applications.
+Each application is kept separate.
 
-App icons should be SVG assets rather than emoji or text glyphs so the real shell can use consistent scalable icons.
+Each app has its own `.exk` application package and its own `.svg` icon. The `.exk` is the executable/application package; the SVG is only the app icon.
 
-Current planned app icons:
-- Files
-- Browser
-- Terminal
-- App Store
-- Settings
+Current system apps: Files, Browser, Terminal, App Store, Settings.
