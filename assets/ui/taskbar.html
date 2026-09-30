@@ -11,21 +11,41 @@ body{display:grid;place-items:end center;padding:18px}
 .taskbar{width:min(940px,calc(100vw - 36px));height:72px;border-radius:22px;background:rgba(48,55,64,.94);display:flex;align-items:center;justify-content:center;gap:18px;padding:0 24px;box-shadow:0 8px 30px rgba(0,0,0,.28)}
 button{width:44px;height:44px;border:0;border-radius:10px;background:transparent;color:#fff;display:grid;place-items:center;font-size:22px;cursor:pointer}
 button:hover,button:focus-visible{background:#454e59;outline:none}
+button:active,.active{background:#596572}
 .start{font-size:24px}
 .apps{display:flex;align-items:center;gap:18px}
 .status{margin-left:auto;display:flex;align-items:center;gap:9px;color:#fff;font-size:13px;white-space:nowrap}
 .dot{width:8px;height:8px;border-radius:50%;background:#fff}
+.start-menu{position:fixed;left:50%;bottom:108px;transform:translateX(-50%);width:min(620px,calc(100vw - 36px));height:430px;border-radius:24px;background:#303740;box-shadow:0 18px 55px rgba(0,0,0,.42);display:none;padding:28px;color:#fff}
+.start-menu.open{display:block}
+.start-menu h2{margin:0 0 24px;font-size:24px}
+.start-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.start-app{height:90px;border-radius:14px;background:#39424c;color:#fff;border:0;font-size:15px;cursor:pointer}
+.start-app:hover,.start-app:focus-visible{background:#454e59;outline:none}
 @media(max-width:600px){
 .taskbar{height:62px;border-radius:18px;padding:0 14px;gap:10px}
 .apps{gap:8px}
 button{width:40px;height:40px}
 .status{font-size:11px}
+.start-menu{bottom:88px;height:380px;padding:20px}
+.start-grid{grid-template-columns:repeat(2,1fr)}
 }
 </style>
 </head>
 <body>
+<section class="start-menu" id="startMenu" aria-label="SparkOS Start menu">
+<h2>Start</h2>
+<div class="start-grid">
+<button class="start-app">Files</button>
+<button class="start-app">Browser</button>
+<button class="start-app">Terminal</button>
+<button class="start-app">App Store</button>
+<button class="start-app">Settings</button>
+</div>
+</section>
+
 <nav class="taskbar" aria-label="SparkOS taskbar">
-<button class="start" aria-label="Start menu">✦</button>
+<button class="start" id="startButton" aria-label="Start menu" aria-expanded="false">✦</button>
 <div class="apps">
 <button aria-label="Files">▣</button>
 <button aria-label="Browser">◎</button>
@@ -35,5 +55,28 @@ button{width:40px;height:40px}
 </div>
 <div class="status" aria-label="System status"><span class="dot"></span><span>Ready</span></div>
 </nav>
+
+<script>
+const startButton=document.getElementById("startButton");
+const startMenu=document.getElementById("startMenu");
+
+startButton.addEventListener("click",()=>{
+const open=startMenu.classList.toggle("open");
+startButton.classList.toggle("active",open);
+startButton.setAttribute("aria-expanded",String(open));
+});
+
+document.querySelectorAll(".apps button").forEach(button=>{
+button.addEventListener("click",()=>{
+button.classList.toggle("active");
+});
+});
+
+document.querySelectorAll(".start-app").forEach(button=>{
+button.addEventListener("click",()=>{
+button.classList.add("active");
+});
+});
+</script>
 </body>
 </html>
