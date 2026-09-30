@@ -1,7 +1,0 @@
-SparkOS EXK application package
-name=App Store
-id=sparkos.app-store
-icon=app-store.svg
-runtime=native
-entry=system-app-store
-capabilities=network,install-apps
