@@ -1,0 +1,9 @@
+{
+  "name": "SparkOS Boot",
+  "fps": 30,
+  "duration_ms": 2200,
+  "loop": true,
+  "background": "#20252b",
+  "sequence": ["mark-scale", "mark-fade", "wordmark-fade", "pulse-dot"],
+  "native_target": "plymouth"
+}
