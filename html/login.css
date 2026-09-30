@@ -1,0 +1,32 @@
+*{box-sizing:border-box}
+html,body{margin:0;width:100%;height:100%;font-family:Arial,sans-serif;background:#20252b;color:#fff}
+body{overflow:hidden}
+.login-screen{min-height:100%;display:grid;place-items:center;padding:28px;position:relative;background:radial-gradient(circle at 50% 35%,rgba(70,86,105,.28),transparent 45%),#20252b}
+.login-card{width:min(440px,100%);padding:34px;border:1px solid rgba(255,255,255,.09);border-radius:24px;background:rgba(43,49,57,.96);box-shadow:0 24px 70px rgba(0,0,0,.42)}
+.brand{display:flex;flex-direction:column;align-items:center;gap:12px;margin-bottom:28px}
+.zap{width:48px;height:48px}
+.zap path{fill:#fff}
+.brand h1{font-size:26px;margin:0;font-weight:650}
+.brand p{margin:0;color:#aeb7c2;font-size:14px}
+.login-options{display:grid;gap:10px}
+.login-option{width:100%;height:50px;border:1px solid rgba(255,255,255,.1);border-radius:13px;background:#353d47;color:#fff;font-size:15px;cursor:pointer}
+.login-option:hover{background:#3d4651}
+.login-option.google{background:#fff;color:#20252b;border-color:#fff}
+.login-option.google:hover{background:#f0f0f0}
+.divider{display:flex;align-items:center;gap:12px;margin:20px 0;color:#8f99a5;font-size:12px}
+.divider:before,.divider:after{content:"";height:1px;background:rgba(255,255,255,.1);flex:1}
+.login-form{display:none;gap:12px}
+.login-form.show{display:grid}
+.login-form label{font-size:13px;color:#cbd2da}
+.login-form input{width:100%;height:48px;padding:0 14px;border:1px solid rgba(255,255,255,.12);border-radius:12px;background:#252b32;color:#fff;font-size:15px;outline:0}
+.login-form input:focus{border-color:#8ba4bd;box-shadow:0 0 0 3px rgba(139,164,189,.12)}
+.primary{height:48px;border:0;border-radius:12px;background:#fff;color:#20252b;font-weight:650;cursor:pointer}
+.back{height:42px;border:0;background:transparent;color:#aeb7c2;cursor:pointer}
+.phone-panel{display:none;text-align:center}
+.phone-panel.show{display:block}
+.phone-code{margin:20px auto;padding:18px;border-radius:15px;background:#252b32;font-size:28px;letter-spacing:8px;font-weight:700}
+.phone-note{color:#aeb7c2;font-size:13px;line-height:1.5}
+.guest{position:fixed;right:22px;bottom:18px;border:0;background:transparent;color:#aeb7c2;font-size:14px;cursor:pointer;padding:10px 12px;border-radius:10px}
+.guest:hover{background:rgba(255,255,255,.07);color:#fff}
+.status{min-height:20px;text-align:center;color:#aeb7c2;font-size:13px;margin-top:10px}
+@media(max-width:520px){.login-card{padding:26px}.guest{right:10px;bottom:8px}}
