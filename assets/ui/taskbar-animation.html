@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>SparkOS Taskbar Animation</title>
+<style>
+*{box-sizing:border-box}
+html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#20252b}
+body{display:grid;place-items:end center;padding:18px}
+.taskbar{
+width:min(940px,calc(100vw - 36px));
+height:72px;
+border-radius:22px;
+background:rgba(48,55,64,.94);
+display:flex;
+align-items:center;
+justify-content:center;
+gap:18px;
+padding:0 24px;
+box-shadow:0 8px 30px rgba(0,0,0,.28);
+transform-origin:center bottom;
+animation:taskbar-in .38s cubic-bezier(.2,.8,.2,1) both;
+}
+.item{
+width:44px;height:44px;border:0;border-radius:10px;
+background:transparent;color:#fff;
+display:grid;place-items:center;font-size:22px;
+transform:scale(.82);opacity:0;
+animation:item-in .22s ease-out forwards;
+}
+.item:nth-child(1){animation-delay:.08s}
+.item:nth-child(2){animation-delay:.11s}
+.item:nth-child(3){animation-delay:.14s}
+.item:nth-child(4){animation-delay:.17s}
+.item:nth-child(5){animation-delay:.20s}
+.item:nth-child(6){animation-delay:.23s}
+.item:nth-child(7){animation-delay:.26s}
+@keyframes taskbar-in{
+0%{transform:translateY(24px) scale(.96);opacity:0}
+70%{transform:translateY(-2px) scale(1.005);opacity:1}
+100%{transform:translateY(0) scale(1);opacity:1}
+}
+@keyframes item-in{
+to{transform:scale(1);opacity:1}
+}
+@media(prefers-reduced-motion:reduce){
+.taskbar,.item{animation:none}
+.taskbar{transform:none;opacity:1}
+.item{transform:none;opacity:1}
+}
+</style>
+</head>
+<body>
+<nav class="taskbar" aria-label="SparkOS taskbar">
+<div class="item">✦</div>
+<div class="item">▣</div>
+<div class="item">◎</div>
+<div class="item">⌁</div>
+<div class="item">▦</div>
+<div class="item">⚙</div>
+<div class="item">●</div>
+</nav>
+</body>
+</html>
