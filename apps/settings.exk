@@ -1,0 +1,7 @@
+SparkOS EXK application package
+name=Settings
+id=sparkos.settings
+icon=settings.svg
+runtime=native
+entry=system-settings
+capabilities=system-settings
