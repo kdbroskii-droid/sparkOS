@@ -3,194 +3,102 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>SparkOS Windows 11 Style Taskbar Test</title>
+<title>SparkOS Taskbar Test</title>
 <style>
 *{box-sizing:border-box}
 html,body{margin:0;width:100%;height:100%;overflow:hidden;font-family:Arial,sans-serif;background:#20252b}
 body{position:relative}
-
-/* Windows 11-style centered taskbar */
 .taskbar{
-position:fixed;
-left:50%;
-bottom:14px;
-transform:translateX(-50%);
-height:64px;
-width:min(760px,calc(100vw - 28px));
-padding:8px 12px;
-display:flex;
-align-items:center;
-justify-content:center;
-gap:6px;
-border:1px solid rgba(255,255,255,.08);
-border-radius:18px;
-background:rgba(42,48,56,.94);
-box-shadow:0 10px 32px rgba(0,0,0,.35);
-backdrop-filter:blur(18px);
--webkit-backdrop-filter:blur(18px);
-z-index:20;
+position:fixed;left:50%;bottom:14px;transform:translateX(-50%);
+height:64px;width:min(760px,calc(100vw - 28px));padding:8px 12px;
+display:flex;align-items:center;justify-content:center;gap:6px;
+border:1px solid rgba(255,255,255,.08);border-radius:18px;
+background:rgba(42,48,56,.94);box-shadow:0 10px 32px rgba(0,0,0,.35);
+backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);z-index:20
 }
-
 .apps{display:flex;align-items:center;justify-content:center;gap:4px}
-
 .task-button{
-width:48px;
-height:48px;
-padding:0;
-border:0;
-border-radius:12px;
-background:transparent;
-color:#fff;
-display:grid;
-place-items:center;
-cursor:pointer;
-position:relative;
-font-size:24px;
+width:48px;height:48px;padding:0;border:0;border-radius:12px;background:transparent;
+display:grid;place-items:center;cursor:pointer;position:relative
 }
-
 .task-button:hover{background:rgba(255,255,255,.10)}
 .task-button:focus-visible{outline:2px solid rgba(255,255,255,.7);outline-offset:2px}
 .task-button.active{background:rgba(255,255,255,.15)}
 .task-button.active::after{
-content:"";
-position:absolute;
-bottom:3px;
-left:50%;
-width:18px;
-height:3px;
-border-radius:3px;
-background:#fff;
-transform:translateX(-50%);
+content:"";position:absolute;bottom:3px;left:50%;width:18px;height:3px;
+border-radius:3px;background:#fff;transform:translateX(-50%)
 }
-
-/* SparkOS lightning Start button */
-.zap{
-width:50px;
-height:50px;
-margin-right:3px;
-}
-.zap svg{width:30px;height:30px;display:block}
-.zap path{fill:#fff}
-
-/* Simple clean app glyphs */
-.files-icon{width:25px;height:20px;border:2px solid #fff;border-radius:4px;position:relative}
-.files-icon::before{content:"";position:absolute;left:2px;top:-6px;width:9px;height:6px;border:2px solid #fff;border-bottom:0;border-radius:3px 3px 0 0}
-.browser-icon{width:25px;height:25px;border:2px solid #fff;border-radius:50%;position:relative}
-.browser-icon::before{content:"";position:absolute;left:10px;top:2px;width:2px;height:17px;background:#fff;transform:rotate(35deg)}
-.browser-icon::after{content:"";position:absolute;left:3px;top:10px;width:17px;height:2px;background:#fff;transform:rotate(-25deg)}
-.terminal-icon{width:27px;height:22px;border:2px solid #fff;border-radius:4px;font-size:17px;line-height:15px;text-align:left;padding-left:4px}
-.store-icon{width:24px;height:24px;border:2px solid #fff;border-radius:5px;position:relative}
-.store-icon::before,.store-icon::after{content:"";position:absolute;background:#fff}
-.store-icon::before{width:2px;height:20px;left:9px;top:0}
-.store-icon::after{height:2px;width:20px;left:0;top:9px}
-.settings-icon{font-size:25px}
-
-/* Start menu */
+.task-icon{width:27px;height:27px;display:block;object-fit:contain}
+.zap{width:50px;height:50px;margin-right:3px}
+.zap .task-icon{width:31px;height:31px}
 .start-menu{
-position:fixed;
-left:50%;
-bottom:91px;
-transform:translateX(-50%);
-width:min(620px,calc(100vw - 28px));
-height:500px;
-padding:30px;
-border:1px solid rgba(255,255,255,.08);
-border-radius:22px;
-background:rgba(42,48,56,.97);
-box-shadow:0 20px 60px rgba(0,0,0,.45);
-backdrop-filter:blur(20px);
--webkit-backdrop-filter:blur(20px);
-color:#fff;
-display:none;
-z-index:15;
+position:fixed;left:50%;bottom:91px;transform:translateX(-50%);
+width:min(620px,calc(100vw - 28px));height:500px;padding:30px;
+border:1px solid rgba(255,255,255,.08);border-radius:22px;
+background:rgba(42,48,56,.97);box-shadow:0 20px 60px rgba(0,0,0,.45);
+backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+color:#fff;display:none;z-index:15
 }
 .start-menu.open{display:block}
 .start-title{font-size:22px;font-weight:600;margin:0 0 22px 4px}
 .start-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
 .start-app{
-height:100px;
-border:0;
-border-radius:14px;
-background:rgba(255,255,255,.055);
-color:#fff;
-cursor:pointer;
-font-size:14px;
-display:flex;
-flex-direction:column;
-align-items:center;
-justify-content:center;
-gap:10px;
+height:100px;border:0;border-radius:14px;background:rgba(255,255,255,.055);
+color:#fff;cursor:pointer;font-size:14px;display:flex;flex-direction:column;
+align-items:center;justify-content:center;gap:10px
 }
 .start-app:hover{background:rgba(255,255,255,.11)}
 .start-app.active{background:rgba(255,255,255,.16)}
-
 @media(max-width:600px){
 .taskbar{bottom:8px;height:58px;border-radius:17px;width:calc(100vw - 16px)}
-.task-button{width:42px;height:42px}
-.zap{width:44px;height:44px}
-.zap svg{width:27px;height:27px}
+.task-button{width:42px;height:42px}.zap{width:44px;height:44px}
+.zap .task-icon{width:27px;height:27px}
 .start-menu{bottom:74px;height:430px;padding:20px}
 .start-grid{grid-template-columns:repeat(2,1fr)}
 }
 </style>
 </head>
 <body>
-
 <section class="start-menu" id="startMenu" aria-label="SparkOS Start menu">
 <h2 class="start-title">Start</h2>
 <div class="start-grid">
-<button class="start-app"><span class="files-icon"></span><span>Files</span></button>
-<button class="start-app"><span class="browser-icon"></span><span>Browser</span></button>
-<button class="start-app"><span class="terminal-icon">&gt;_</span><span>Terminal</span></button>
-<button class="start-app"><span class="store-icon"></span><span>App Store</span></button>
-<button class="start-app"><span class="settings-icon">⚙</span><span>Settings</span></button>
+<button class="start-app"><img class="task-icon" src="../apps/files.svg" alt=""><span>Files</span></button>
+<button class="start-app"><img class="task-icon" src="../apps/browser.svg" alt=""><span>Browser</span></button>
+<button class="start-app"><img class="task-icon" src="../apps/terminal.svg" alt=""><span>Terminal</span></button>
+<button class="start-app"><img class="task-icon" src="../apps/app-store.svg" alt=""><span>App Store</span></button>
+<button class="start-app"><img class="task-icon" src="../apps/settings.svg" alt=""><span>Settings</span></button>
 </div>
 </section>
-
 <nav class="taskbar" aria-label="SparkOS taskbar">
-<button class="task-button zap" id="zapButton" aria-label="Start menu" aria-expanded="false">
-<svg viewBox="0 0 100 100" aria-hidden="true">
-<path d="M55 5 18 52h27l-7 43 44-57H55z"/>
-</svg>
+<button class="task-button zap" id="zapButton" aria-label="Zap Start menu" aria-expanded="false">
+<img class="task-icon" src="../logos-and-animations/zap.svg" alt="">
 </button>
-
 <div class="apps">
-<button class="task-button" aria-label="Files"><span class="files-icon"></span></button>
-<button class="task-button" aria-label="Browser"><span class="browser-icon"></span></button>
-<button class="task-button" aria-label="Terminal"><span class="terminal-icon">&gt;_</span></button>
-<button class="task-button" aria-label="App Store"><span class="store-icon"></span></button>
-<button class="task-button" aria-label="Settings"><span class="settings-icon">⚙</span></button>
+<button class="task-button" aria-label="Files"><img class="task-icon" src="../apps/files.svg" alt=""></button>
+<button class="task-button" aria-label="Browser"><img class="task-icon" src="../apps/browser.svg" alt=""></button>
+<button class="task-button" aria-label="Terminal"><img class="task-icon" src="../apps/terminal.svg" alt=""></button>
+<button class="task-button" aria-label="App Store"><img class="task-icon" src="../apps/app-store.svg" alt=""></button>
+<button class="task-button" aria-label="Settings"><img class="task-icon" src="../apps/settings.svg" alt=""></button>
 </div>
 </nav>
-
 <script>
 const zap=document.getElementById("zapButton");
 const menu=document.getElementById("startMenu");
-
 zap.addEventListener("click",()=>{
-const open=menu.classList.toggle("open");
-zap.classList.toggle("active",open);
-zap.setAttribute("aria-expanded",String(open));
+ const open=menu.classList.toggle("open");
+ zap.classList.toggle("active",open);
+ zap.setAttribute("aria-expanded",String(open));
 });
-
 document.querySelectorAll(".apps .task-button").forEach(button=>{
-button.addEventListener("click",()=>{
-button.classList.toggle("active");
+ button.addEventListener("click",()=>button.classList.toggle("active"));
 });
-});
-
 document.querySelectorAll(".start-app").forEach(button=>{
-button.addEventListener("click",()=>{
-button.classList.toggle("active");
+ button.addEventListener("click",()=>button.classList.toggle("active"));
 });
-});
-
-document.addEventListener("click",(event)=>{
-if(!menu.contains(event.target) && !zap.contains(event.target)){
-menu.classList.remove("open");
-zap.classList.remove("active");
-zap.setAttribute("aria-expanded","false");
-}
+document.addEventListener("click",event=>{
+ if(!menu.contains(event.target)&&!zap.contains(event.target)){
+  menu.classList.remove("open");zap.classList.remove("active");zap.setAttribute("aria-expanded","false");
+ }
 });
 </script>
 </body>
