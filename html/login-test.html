@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>SparkOS Login Test</title>
+<link rel="stylesheet" href="login.css">
+</head>
+<body>
+<main class="login-screen">
+<section class="login-card" aria-label="SparkOS login">
+<div class="brand">
+<svg class="zap" viewBox="0 0 100 100" aria-hidden="true"><path d="M55 5 18 52h27l-7 43 44-57H55z"/></svg>
+<h1>Welcome to SparkOS</h1>
+<p>Sign in to continue</p>
+</div>
+
+<div class="login-options" id="loginOptions">
+<button class="login-option google" id="googleButton">Continue with Google</button>
+<button class="login-option" id="emailButton">Continue with email</button>
+<button class="login-option" id="phoneButton">Connect with phone</button>
+</div>
+
+<div class="divider">or</div>
+
+<form class="login-form" id="emailForm">
+<label for="email">Email address</label>
+<input id="email" type="email" autocomplete="email" placeholder="you@example.com" required>
+<label for="username">Username</label>
+<input id="username" type="text" autocomplete="username" placeholder="Choose a username">
+<label for="password">Password</label>
+<input id="password" type="password" autocomplete="new-password" placeholder="Leave blank for Space unlock">
+<button class="primary" type="submit">Create account / Sign in</button>
+<button class="back" type="button" data-back>Back</button>
+</form>
+
+<div class="phone-panel" id="phonePanel">
+<p>Open SparkOS Connect on your phone and enter this code.</p>
+<div class="phone-code">7 4 2 9</div>
+<p class="phone-note">Your phone connection can become the secure sign-in method for the finished OS.</p>
+<button class="back" type="button" data-back>Back</button>
+</div>
+
+<div class="status" id="status" aria-live="polite"></div>
+</section>
+<button class="guest" id="guestButton">Guest Mode</button>
+</main>
+<script src="login.js"></script>
+</body>
+</html>
