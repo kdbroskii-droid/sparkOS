@@ -9,13 +9,13 @@
 html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#20252b}
 body{display:grid;place-items:center}
 .boot{width:75vw;height:75vh;display:grid;place-items:center}
-.logo{width:min(24vw,240px);min-width:110px;overflow:visible;filter:drop-shadow(0 0 18px rgba(255,255,255,.08))}
+.logo{width:min(24vw,240px);min-width:110px;overflow:visible}
 .mark{fill:#fff;transform-origin:360px 115px;animation:pulse 2.2s ease-in-out infinite}
 .wordmark{fill:#fff;font:700 62px Arial,sans-serif;letter-spacing:12px;opacity:0;animation:wordmark 1.2s ease-out .25s forwards}
 .dot{fill:#fff;animation:dot 1.2s ease-in-out infinite}
 @keyframes pulse{
-0%,100%{transform:translateY(-28px) scale(.82);opacity:.55}
-50%{transform:translateY(-28px) scale(1);opacity:1}
+0%,100%{transform:scale(.82);opacity:.55;filter:drop-shadow(0 0 4px rgba(255,255,255,.15))}
+50%{transform:scale(1);opacity:1;filter:drop-shadow(0 0 18px rgba(255,255,255,.7))}
 }
 @keyframes wordmark{
 from{opacity:0;transform:translateY(10px)}
@@ -27,7 +27,7 @@ to{opacity:1;transform:translateY(0)}
 }
 @media(prefers-reduced-motion:reduce){
 .mark,.wordmark,.dot{animation:none}
-.mark{transform:translateY(-28px)}
+.mark{transform:none;opacity:1;filter:none}
 .wordmark{opacity:1}
 .dot{r:4}
 }
@@ -35,21 +35,16 @@ to{opacity:1;transform:translateY(0)}
 </head>
 <body>
 <main class="boot" aria-label="SparkOS boot animation">
-<!-- Everything needed for the boot animation is bundled in this single HTML file. -->
 <svg class="logo" viewBox="0 0 720 500" role="img" aria-label="SparkOS">
 <g transform="translate(360 155)">
 <path class="mark" d="M34-150-150 85h124l-27 180L165 2H31z"/>
 </g>
-<!-- Wordmark position intentionally preserved. -->
 <text class="wordmark" x="360" y="350" text-anchor="middle">SPARKOS</text>
-<!-- Loading dots sit lower beneath the wordmark. -->
 <circle class="dot" cx="360" cy="440" r="2"/>
 <circle class="dot" cx="330" cy="440" r="2" style="animation-delay:.15s"/>
 <circle class="dot" cx="390" cy="440" r="2" style="animation-delay:.3s"/>
 </svg>
 </main>
-<script>
-document.documentElement.dataset.sparkOSBoot="ready";
-</script>
+<script>document.documentElement.dataset.sparkOSBoot="ready";</script>
 </body>
 </html>
