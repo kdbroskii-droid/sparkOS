@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080">
+  <title>SparkOS silent boot animation</title>
+  <rect width="1920" height="1080" fill="#20252b"/>
+  <g transform="translate(960 510)">
+    <g fill="none" stroke="#ffffff" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M0-86 L24-24 L86 0 L24 24 L0 86 L-24 24 L-86 0 L-24-24 Z"
+            stroke-width="7" opacity="0">
+        <animate attributeName="opacity" values="0;1;1;0" dur="2.2s" repeatCount="indefinite"/>
+        <animateTransform attributeName="transform" type="scale"
+          values=".72;1;1.04;1" dur="2.2s" repeatCount="indefinite"/>
+      </path>
+      <circle r="9" fill="#ffffff" stroke="none" opacity="0">
+        <animate attributeName="opacity" values="0;1;1;0" dur="2.2s" repeatCount="indefinite"/>
+      </circle>
+    </g>
+    <text x="0" y="155" text-anchor="middle"
+      fill="#ffffff" font-family="Arial, Helvetica, sans-serif"
+      font-size="48" font-weight="500" letter-spacing="4"
+      opacity="0">SPARKOS
+      <animate attributeName="opacity" values="0;0;1;1;0" dur="2.2s" repeatCount="indefinite"/>
+      <animateTransform attributeName="transform" type="translate"
+        values="0 10;0 10;0 0;0 0;0 -4" dur="2.2s" repeatCount="indefinite"/>
+    </text>
+  </g>
+</svg>
