@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>SparkOS Taskbar</title>
+<style>
+*{box-sizing:border-box}
+html,body{margin:0;min-height:100%;background:#20252b;font-family:Arial,sans-serif}
+body{display:grid;place-items:end center;padding:18px}
+.taskbar{width:min(940px,calc(100vw - 36px));height:72px;border-radius:22px;background:rgba(48,55,64,.94);display:flex;align-items:center;justify-content:center;gap:18px;padding:0 24px;box-shadow:0 8px 30px rgba(0,0,0,.28)}
+button{width:44px;height:44px;border:0;border-radius:10px;background:transparent;color:#fff;display:grid;place-items:center;font-size:22px;cursor:pointer}
+button:hover,button:focus-visible{background:#454e59;outline:none}
+.start{font-size:24px}
+.apps{display:flex;align-items:center;gap:18px}
+.status{margin-left:auto;display:flex;align-items:center;gap:9px;color:#fff;font-size:13px;white-space:nowrap}
+.dot{width:8px;height:8px;border-radius:50%;background:#fff}
+@media(max-width:600px){
+.taskbar{height:62px;border-radius:18px;padding:0 14px;gap:10px}
+.apps{gap:8px}
+button{width:40px;height:40px}
+.status{font-size:11px}
+}
+</style>
+</head>
+<body>
+<nav class="taskbar" aria-label="SparkOS taskbar">
+<button class="start" aria-label="Start menu">✦</button>
+<div class="apps">
+<button aria-label="Files">▣</button>
+<button aria-label="Browser">◎</button>
+<button aria-label="Terminal">⌁</button>
+<button aria-label="App Store">▦</button>
+<button aria-label="Settings">⚙</button>
+</div>
+<div class="status" aria-label="System status"><span class="dot"></span><span>Ready</span></div>
+</nav>
+</body>
+</html>
