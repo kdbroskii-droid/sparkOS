@@ -1,0 +1,7 @@
+SparkOS EXK application package
+name=Browser
+id=sparkos.browser
+icon=browser.svg
+runtime=webview
+entry=system-browser
+capabilities=network,downloads,open-with
