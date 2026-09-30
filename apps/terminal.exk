@@ -1,7 +1,0 @@
-SparkOS EXK application package
-name=Terminal
-id=sparkos.terminal
-icon=terminal.svg
-runtime=native
-entry=system-terminal
-capabilities=terminal,filesystem
