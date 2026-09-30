@@ -1,0 +1,7 @@
+SparkOS EXK application package
+name=Files
+id=sparkos.files
+icon=files.svg
+runtime=native
+entry=system-files
+capabilities=filesystem,storage,open-with
