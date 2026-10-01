@@ -8,7 +8,7 @@ const apps={
  files:{title:"Files",body:'<h2>Files</h2><p>Your files and folders.</p><div class="file-list"><div class="file-row">Home</div><div class="file-row">Downloads</div><div class="file-row">Documents</div><div class="file-row">Pictures</div></div>'},
  browser:{title:"Browser",body:'<div class="browser-page"><div><h2>Browser</h2><p>SparkOS web browser</p></div></div>'},
  terminal:{title:"Terminal",body:'<h2>Terminal</h2><p>SparkOS command terminal</p><div class="file-row">sparkOS@desktop:~$</div>'},
- store:{title:"App Store",body:'<h2>App Store</h2><p>Install trusted SparkOS applications.</p>'},
+ store:{title:"App Store",body:'<iframe src="app-store-test.html" title="SparkOS App Store" style="width:100%;height:100%;border:0;border-radius:12px;background:#0d1622"></iframe>'},
  settings:{title:"Settings",body:'<h2>Settings</h2><p>System settings and personalization.</p>'}
 };
 
