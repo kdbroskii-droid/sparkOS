@@ -1,3 +1,25 @@
 #!/bin/sh
 set -eu
-exec chromium --no-first-run --disable-session-crashed-bubble --kiosk file:///usr/share/sparkos/desktop/desktop-test.html
+
+DESKTOP="/usr/share/sparkos/desktop/desktop-test.html"
+PROFILE="/home/spark/.config/sparkos-chromium"
+
+# Give X/Openbox a moment to finish starting.
+sleep 3
+
+mkdir -p "$PROFILE"
+chown -R spark:spark "$PROFILE" 2>/dev/null || true
+
+# Keep the SparkOS desktop alive if Chromium crashes or starts too early.
+while true; do
+  if [ -f "$DESKTOP" ]; then
+    chromium \
+      --no-first-run \
+      --disable-session-crashed-bubble \
+      --disable-features=Translate,MediaRouter \
+      --user-data-dir="$PROFILE" \
+      --kiosk \
+      "file://$DESKTOP" || true
+  fi
+  sleep 2
+done
