@@ -1,0 +1,8 @@
+EXK
+name=App Store
+id=sparkos.appstore
+version=0.1.0
+type=system
+entry=app-store.native
+icon=app-store.svg
+permissions=network,package-install
