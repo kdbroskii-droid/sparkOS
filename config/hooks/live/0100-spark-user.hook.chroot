@@ -1,0 +1,8 @@
+#!/bin/sh
+set -eu
+
+if ! id spark >/dev/null 2>&1; then
+  useradd -m -s /bin/bash spark
+  passwd -d spark
+  usermod -aG audio,video,netdev spark || true
+fi
