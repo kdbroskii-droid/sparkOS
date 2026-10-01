@@ -1,0 +1,4 @@
+#!/bin/sh
+nm-applet >/dev/null 2>&1 &
+blueman-applet >/dev/null 2>&1 &
+/usr/local/bin/sparkos-desktop &
