@@ -1,0 +1,3 @@
+#!/bin/sh
+set -eu
+exec chromium --no-first-run --disable-session-crashed-bubble --kiosk file:///usr/share/sparkos/desktop/desktop-test.html
