@@ -1,0 +1,8 @@
+EXK
+name=Terminal
+id=sparkos.terminal
+version=0.1.0
+type=system
+entry=terminal.native
+icon=terminal.svg
+permissions=terminal,filesystem
