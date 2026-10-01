@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>SparkOS Desktop Test</title>
+<link rel="stylesheet" href="desktop.css">
+</head>
+<body>
+<main class="desktop">
+<div class="wallpaper" aria-hidden="true">
+<svg class="zap-mark" viewBox="0 0 100 100"><path d="M55 5 18 52h27l-7 43 44-57H55z"/></svg>
+</div>
+
+<section class="desktop-icons" aria-label="Desktop apps">
+<button class="desktop-icon" data-app="files">
+<span class="icon-box"><svg viewBox="0 0 36 36"><path d="M5 11h10l3 4h13v15H5z" fill="none" stroke="white" stroke-width="2.2" stroke-linejoin="round"/><path d="M5 11V8h10l3 4" fill="none" stroke="white" stroke-width="2.2"/></svg></span><span class="icon-label">Files</span>
+</button>
+<button class="desktop-icon" data-app="browser">
+<span class="icon-box"><svg viewBox="0 0 36 36"><circle cx="18" cy="18" r="13" fill="none" stroke="white" stroke-width="2.2"/><path d="M5 18h26M18 5c4 4 6 8 6 13s-2 9-6 13c-4-4-6-8-6-13s2-9 6-13Z" fill="none" stroke="white" stroke-width="2"/></svg></span><span class="icon-label">Browser</span>
+</button>
+<button class="desktop-icon" data-app="terminal">
+<span class="icon-box"><svg viewBox="0 0 36 36"><rect x="4" y="6" width="28" height="24" rx="4" fill="none" stroke="white" stroke-width="2.2"/><path d="m10 14 5 4-5 4M19 23h7" fill="none" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="icon-label">Terminal</span>
+</button>
+</section>
+
+<section class="app-window" id="appWindow" aria-label="Application window">
+<div class="window-bar"><span class="window-title" id="windowTitle">App</span><button class="window-close" id="closeWindow" aria-label="Close">×</button></div>
+<div class="window-body" id="windowBody"></div>
+</section>
+
+<section class="start-menu" id="startMenu">
+<h2 class="start-title">Start</h2>
+<div class="start-grid">
+<button class="start-app" data-app="files">Files</button>
+<button class="start-app" data-app="browser">Browser</button>
+<button class="start-app" data-app="terminal">Terminal</button>
+<button class="start-app" data-app="store">App Store</button>
+<button class="start-app" data-app="settings">Settings</button>
+</div>
+</section>
+
+<nav class="taskbar" aria-label="SparkOS taskbar">
+<button class="task-button zap" id="zapButton" aria-label="Start menu"><svg viewBox="0 0 100 100"><path d="M55 5 18 52h27l-7 43 44-57H55z"/></svg></button>
+<button class="task-button" data-app="files" aria-label="Files"><svg class="task-icon" viewBox="0 0 36 36"><path d="M5 11h10l3 4h13v15H5zM5 11V8h10l3 4"/></svg></button>
+<button class="task-button" data-app="browser" aria-label="Browser"><svg class="task-icon" viewBox="0 0 36 36"><circle cx="18" cy="18" r="13"/><path d="M5 18h26M18 5c4 4 6 8 6 13s-2 9-6 13c-4-4-6-8-6-13s2-9 6-13Z"/></svg></button>
+<button class="task-button" data-app="terminal" aria-label="Terminal"><svg class="task-icon" viewBox="0 0 36 36"><rect x="4" y="6" width="28" height="24" rx="4"/><path d="m10 14 5 4-5 4M19 23h7"/></svg></button>
+<button class="task-button" data-app="store" aria-label="App Store"><svg class="task-icon" viewBox="0 0 36 36"><rect x="6" y="7" width="24" height="23" rx="4"/><path d="M18 12v13M12 18h12"/></svg></button>
+<button class="task-button" data-app="settings" aria-label="Settings"><svg class="task-icon" viewBox="0 0 36 36"><circle cx="18" cy="18" r="5"/><path d="M18 5v4M18 27v4M5 18h4M27 18h4M9 9l3 3M24 24l3 3M27 9l-3 3M12 24l-3 3"/></svg></button>
+</nav>
+<div class="clock"><span id="time"></span><span id="date"></span></div>
+</main>
+<script src="desktop.js"></script>
+</body>
+</html>
