@@ -1,0 +1,35 @@
+*{box-sizing:border-box}
+html,body{margin:0;width:100%;height:100%;overflow:hidden;font-family:Arial,sans-serif;background:#0d1622;color:#fff}
+.desktop{position:relative;width:100%;height:100%;overflow:hidden;background:#101b29}
+.wallpaper{position:absolute;inset:0;overflow:hidden;background:radial-gradient(circle at 50% 38%,rgba(63,113,168,.34),transparent 30%),linear-gradient(145deg,#101b29 0%,#172638 48%,#0d1520 100%)}
+.wallpaper:before{content:"";position:absolute;width:75vmax;height:75vmax;left:50%;top:48%;transform:translate(-50%,-50%);border-radius:50%;background:radial-gradient(circle,rgba(112,176,231,.16) 0,rgba(55,105,160,.08) 32%,transparent 68%)}
+.wallpaper:after{content:"";position:absolute;inset:-30%;background:linear-gradient(125deg,transparent 38%,rgba(255,255,255,.025) 40%,transparent 42%,transparent 58%,rgba(255,255,255,.02) 60%,transparent 62%);transform:rotate(-7deg)}
+.zap-mark{position:absolute;left:50%;top:42%;width:min(130px,18vw);height:min(130px,18vw);transform:translate(-50%,-50%);opacity:.13;filter:drop-shadow(0 0 25px rgba(145,200,255,.5))}
+.zap-mark path{fill:#dceeff}
+.desktop-icons{position:absolute;top:22px;left:22px;display:grid;grid-auto-flow:row;grid-template-columns:repeat(1,86px);gap:8px;z-index:3}
+.desktop-icon{width:78px;height:82px;border:0;border-radius:12px;background:transparent;color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:7px;cursor:pointer;text-shadow:0 1px 3px #000}
+.desktop-icon:hover{background:rgba(255,255,255,.09)}
+.desktop-icon:focus-visible{outline:2px solid rgba(255,255,255,.7)}
+.icon-box{width:34px;height:34px;display:grid;place-items:center}
+.icon-box svg{width:34px;height:34px}
+.icon-label{font-size:12px;max-width:76px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.app-window{position:absolute;left:50%;top:48%;width:min(760px,calc(100vw - 48px));height:min(500px,calc(100vh - 150px));transform:translate(-50%,-50%);display:none;flex-direction:column;background:rgba(42,49,58,.97);border:1px solid rgba(255,255,255,.1);border-radius:18px;box-shadow:0 25px 80px rgba(0,0,0,.5);overflow:hidden;z-index:10}
+.app-window.open{display:flex}
+.window-bar{height:52px;display:flex;align-items:center;padding:0 14px;border-bottom:1px solid rgba(255,255,255,.08);background:rgba(35,41,49,.9)}
+.window-title{flex:1;font-size:14px;font-weight:600}
+.window-close{width:34px;height:34px;border:0;border-radius:9px;background:transparent;color:#fff;font-size:19px;cursor:pointer}
+.window-close:hover{background:rgba(255,80,80,.25)}
+.window-body{flex:1;padding:24px;overflow:auto}
+.window-body h2{margin:0 0 10px;font-size:22px}.window-body p{color:#aeb8c4}
+.file-list{display:grid;gap:8px}.file-row{padding:13px 15px;border-radius:10px;background:rgba(255,255,255,.055)}
+.browser-page{height:100%;display:grid;place-items:center;text-align:center}
+.browser-page h2{font-size:28px}
+.taskbar{position:absolute;left:50%;bottom:14px;transform:translateX(-50%);height:64px;width:min(760px,calc(100vw - 28px));padding:8px 12px;display:flex;align-items:center;justify-content:center;gap:6px;border:1px solid rgba(255,255,255,.08);border-radius:18px;background:rgba(35,42,51,.91);box-shadow:0 10px 32px rgba(0,0,0,.4);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);z-index:20}
+.task-button{width:48px;height:48px;padding:0;border:0;border-radius:12px;background:transparent;color:#fff;display:grid;place-items:center;cursor:pointer}
+.task-button:hover{background:rgba(255,255,255,.1)}.task-button.active{background:rgba(255,255,255,.15)}
+.zap{width:50px;height:50px;margin-right:3px}.zap svg{width:30px;height:30px}.zap path{fill:#fff}
+.task-icon{width:28px;height:28px}.task-icon path,.task-icon circle,.task-icon rect,.task-icon line{stroke:#fff;fill:none;stroke-width:2}
+.start-menu{position:absolute;left:50%;bottom:91px;transform:translateX(-50%);width:min(620px,calc(100vw - 28px));padding:26px;border:1px solid rgba(255,255,255,.09);border-radius:22px;background:rgba(38,45,54,.97);box-shadow:0 20px 60px rgba(0,0,0,.5);backdrop-filter:blur(20px);z-index:15;display:none}
+.start-menu.open{display:block}.start-title{margin:0 0 20px 4px;font-size:21px}.start-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}.start-app{height:92px;border:0;border-radius:13px;background:rgba(255,255,255,.05);color:#fff;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px}.start-app:hover{background:rgba(255,255,255,.1)}
+.clock{position:absolute;right:18px;bottom:25px;z-index:21;text-align:right;font-size:12px;line-height:1.35;color:#dce3ea}.clock span{display:block}
+@media(max-width:650px){.taskbar{bottom:8px;height:58px;width:calc(100vw - 16px)}.task-button{width:42px;height:42px}.zap{width:44px;height:44px}.start-menu{bottom:74px}.start-grid{grid-template-columns:repeat(2,1fr)}.desktop-icons{left:10px;top:10px}}
