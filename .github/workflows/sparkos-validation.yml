@@ -1,0 +1,21 @@
+name: SparkOS validation
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate SparkOS sources
+        run: |
+          chmod +x sparkOS/apps/build-apps.sh sparkOS/recovery/recovery.sh sparkOS/recovery/verify.sh
+          sparkOS/apps/build-apps.sh
+          python3 -m py_compile sparkOS/recovery/recovery-state.py
+      - name: Validate recovery test
+        run: |
+          test -f html/recovery-test.html
+          test -f html/recovery-test.css
+          test -f html/recovery-test.js
