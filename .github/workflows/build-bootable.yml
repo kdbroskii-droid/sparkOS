@@ -16,10 +16,15 @@ jobs:
         run: |
           mkdir -p config/includes.chroot/usr/share/sparkos/desktop
           cp html/*.html html/*.css html/*.js config/includes.chroot/usr/share/sparkos/desktop/
+          chmod +x config/hooks/live/0100-spark-user.hook.chroot
           chmod +x config/includes.chroot/usr/local/bin/sparkos-desktop
           chmod +x config/includes.chroot/usr/local/sbin/sparkos-firstboot
           mkdir -p config/includes.chroot/etc/systemd/system/multi-user.target.wants
           ln -sf /etc/systemd/system/sparkos-firstboot.service config/includes.chroot/etc/systemd/system/multi-user.target.wants/sparkos-firstboot.service
+      - name: Clean previous live-build state
+        run: |
+          sudo lb clean --purge || true
+
       - name: Configure image
         run: |
           lb config \
@@ -28,7 +33,8 @@ jobs:
             --binary-images iso-hybrid \
             --archive-areas "main contrib non-free-firmware" \
             --bootappend-live "boot=live components" \
-            --debian-installer false
+            --debian-installer false \
+            --linux-flavours amd64
       - name: Build ISO
         run: sudo lb build
       - name: Rename image
