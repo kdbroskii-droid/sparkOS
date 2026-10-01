@@ -1,0 +1,9 @@
+#!/bin/sh
+set -eu
+mkdir -p /var/lib/sparkos
+if ! id spark >/dev/null 2>&1; then
+  useradd -m -s /bin/bash spark
+  echo "spark:spark" | chpasswd
+  usermod -aG audio,video,netdev spark || true
+fi
+touch /var/lib/sparkos/.firstboot-done
