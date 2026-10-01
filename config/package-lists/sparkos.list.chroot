@@ -1,3 +1,5 @@
+linux-image-amd64
+xserver-xorg
 openbox
 lightdm
 chromium
@@ -9,11 +11,10 @@ pipewire
 pipewire-pulse
 wireplumber
 python3
-python3-venv
 sudo
-policykit-1
+polkitd
+pkexec
 udisks2
 upower
 dbus-user-session
-xwayland
 fonts-dejavu
