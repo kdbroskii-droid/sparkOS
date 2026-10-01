@@ -1,0 +1,38 @@
+name: Build bootable SparkOS
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install live-build
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y live-build
+      - name: Prepare desktop files
+        run: |
+          mkdir -p config/includes.chroot/usr/share/sparkos/desktop
+          cp html/desktop-test.html html/desktop.css html/desktop.js config/includes.chroot/usr/share/sparkos/desktop/
+          chmod +x config/includes.chroot/usr/local/bin/sparkos-desktop
+          chmod +x config/includes.chroot/usr/local/sbin/sparkos-firstboot
+          mkdir -p config/includes.chroot/etc/systemd/system/multi-user.target.wants
+          ln -sf /etc/systemd/system/sparkos-firstboot.service config/includes.chroot/etc/systemd/system/multi-user.target.wants/sparkos-firstboot.service
+      - name: Configure image
+        run: |
+          lb config             --distribution trixie             --architectures amd64             --binary-images iso-hybrid             --archive-areas "main contrib non-free-firmware"             --bootappend-live "boot=live components"             --debian-installer false
+      - name: Build ISO
+        run: sudo lb build
+      - name: Rename image
+        run: |
+          mv live-image-amd64.hybrid.iso SparkOS-amd64-UEFI.iso
+          sha256sum SparkOS-amd64-UEFI.iso > SparkOS-amd64-UEFI.iso.sha256
+      - name: Upload bootable image
+        uses: actions/upload-artifact@v4
+        with:
+          name: SparkOS-amd64-UEFI
+          path: |
+            SparkOS-amd64-UEFI.iso
+            SparkOS-amd64-UEFI.iso.sha256
