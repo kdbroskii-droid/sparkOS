@@ -1,4 +1,8 @@
 linux-image-amd64
+live-boot
+live-boot-initramfs-tools
+live-config
+live-config-systemd
 xserver-xorg
 openbox
 lightdm
@@ -17,4 +21,5 @@ pkexec
 udisks2
 upower
 dbus-user-session
+firmware-linux
 fonts-dejavu
