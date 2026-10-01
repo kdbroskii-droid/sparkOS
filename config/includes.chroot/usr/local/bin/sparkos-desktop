@@ -1,25 +1,31 @@
 #!/bin/sh
 set -eu
 
-DESKTOP="/usr/share/sparkos/desktop/desktop-test.html"
+DESKTOP_DIR="/usr/share/sparkos/desktop"
 PROFILE="/home/spark/.config/sparkos-chromium"
+PORT=8765
 
-# Give X/Openbox a moment to finish starting.
 sleep 3
 
 mkdir -p "$PROFILE"
 chown -R spark:spark "$PROFILE" 2>/dev/null || true
 
-# Keep the SparkOS desktop alive if Chromium crashes or starts too early.
+# Serve the SparkOS desktop over localhost so Chromium loads HTML/CSS/JS normally.
+cd "$DESKTOP_DIR"
+python3 -m http.server "$PORT" --bind 127.0.0.1 >/tmp/sparkos-web.log 2>&1 &
+SERVER_PID=$!
+trap 'kill "$SERVER_PID" 2>/dev/null || true' EXIT
+
+sleep 1
+
 while true; do
-  if [ -f "$DESKTOP" ]; then
-    chromium \
-      --no-first-run \
-      --disable-session-crashed-bubble \
-      --disable-features=Translate,MediaRouter \
-      --user-data-dir="$PROFILE" \
-      --kiosk \
-      "file://$DESKTOP" || true
-  fi
+  chromium \
+    --no-first-run \
+    --disable-session-crashed-bubble \
+    --disable-features=Translate,MediaRouter \
+    --disable-gpu \
+    --user-data-dir="$PROFILE" \
+    --kiosk \
+    "http://127.0.0.1:$PORT/desktop-test.html" || true
   sleep 2
 done
