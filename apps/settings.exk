@@ -1,0 +1,8 @@
+EXK
+name=Settings
+id=sparkos.settings
+version=0.1.0
+type=system
+entry=settings.native
+icon=settings.svg
+permissions=system-settings
