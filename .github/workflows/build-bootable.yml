@@ -88,12 +88,17 @@ jobs:
                 --distribution trixie \
                 --architectures amd64 \
                 --binary-images iso-hybrid \
+                --bootloaders "grub-pc grub-efi" \
+                --firmware-binary true \
+                --firmware-chroot true \
+                --apt-recommends true \
                 --archive-areas "main contrib non-free non-free-firmware" \
                 --mirror-bootstrap "http://deb.debian.org/debian" \
                 --mirror-chroot "http://deb.debian.org/debian" \
                 --mirror-binary "http://deb.debian.org/debian" \
                 --bootappend-live "boot=live components" \
-                --debian-installer false
+                --debian-installer false \
+                --checksums sha256
 
               echo "== build =="
               lb build 2>&1 | tee /workspace/build.log
