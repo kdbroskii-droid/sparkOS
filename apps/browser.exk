@@ -1,0 +1,8 @@
+EXK
+name=Browser
+id=sparkos.browser
+version=0.1.0
+type=system
+entry=browser.native
+icon=browser.svg
+permissions=network,filesystem
