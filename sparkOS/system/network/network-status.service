@@ -1,0 +1,12 @@
+[Unit]
+Description=SparkOS wireless hardware availability
+After=NetworkManager.service bluetooth.service
+Wants=NetworkManager.service bluetooth.service
+
+[Service]
+Type=oneshot
+ExecStart=/bin/sh -c 'command -v nmcli >/dev/null 2>&1 || echo SparkOS: Wi-Fi userspace unavailable; command -v bluetoothctl >/dev/null 2>&1 || echo SparkOS: Bluetooth userspace unavailable'
+RemainAfterExit=yes
+
+[Install]
+WantedBy=multi-user.target
