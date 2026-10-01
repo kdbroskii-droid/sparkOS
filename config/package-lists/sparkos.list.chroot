@@ -2,6 +2,7 @@ openbox
 lightdm
 chromium
 network-manager
+network-manager-gnome
 bluez
 blueman
 pipewire
