@@ -1,0 +1,3 @@
+const root=document.getElementById("screen"),title=document.getElementById("title"),menu=document.getElementById("menu"),bar=document.getElementById("bar"),fill=document.getElementById("fill");
+function state(k){root.className="screen "+k;bar.hidden=k!=="reset";menu.hidden=k!=="green";if(k==="green")title.textContent="SparkOS Recovery";if(k==="red")title.textContent="Recovery integrity check failed";if(k==="reset"){title.textContent="Factory reset";let p=0;const t=setInterval(()=>{p=Math.min(100,p+2);fill.style.width=p+"%";if(p===100)clearInterval(t)},40)}}
+document.querySelectorAll("[data-state]").forEach(b=>b.onclick=()=>state(b.dataset.state));state("green");
