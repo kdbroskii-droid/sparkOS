@@ -1,0 +1,8 @@
+EXK
+name=Files
+id=sparkos.files
+version=0.1.0
+type=system
+entry=files.native
+icon=files.svg
+permissions=filesystem
