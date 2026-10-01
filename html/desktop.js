@@ -28,9 +28,64 @@ function toggleStart(){
 document.querySelectorAll("[data-app]").forEach(button=>button.addEventListener("click",()=>openApp(button.dataset.app)));
 document.getElementById("closeWindow").addEventListener("click",closeApp);
 zapButton.addEventListener("click",toggleStart);
+
 document.addEventListener("click",event=>{
  if(!startMenu.contains(event.target)&&!zapButton.contains(event.target))startMenu.classList.remove("open");
 });
+
+/* Physical Chromebook/SparkOS keyboard mappings.
+   The finished OS should connect these actions to its native power,
+   display, audio and media services instead of using browser APIs. */
+const keyActions={
+ "AudioVolumeUp":()=>showKeyStatus("Volume up"),
+ "AudioVolumeDown":()=>showKeyStatus("Volume down"),
+ "AudioVolumeMute":()=>showKeyStatus("Mute"),
+ "BrightnessUp":()=>showKeyStatus("Brightness up"),
+ "BrightnessDown":()=>showKeyStatus("Brightness down"),
+ "MediaPlayPause":()=>showKeyStatus("Play / pause"),
+ "MediaTrackNext":()=>showKeyStatus("Next track"),
+ "MediaTrackPrevious":()=>showKeyStatus("Previous track"),
+ "LaunchSearch":()=>toggleStart(),
+ "Search":()=>toggleStart(),
+ "Escape":()=>{if(startMenu.classList.contains("open"))startMenu.classList.remove("open");else closeApp()},
+ "BrowserBack":()=>showKeyStatus("Back"),
+ "BrowserForward":()=>showKeyStatus("Forward"),
+ "BrowserRefresh":()=>showKeyStatus("Refresh")
+};
+
+function showKeyStatus(message){
+ const status=document.getElementById("keyStatus");
+ if(!status)return;
+ status.textContent=message;
+ status.classList.add("show");
+ clearTimeout(window.sparkKeyStatusTimer);
+ window.sparkKeyStatusTimer=setTimeout(()=>status.classList.remove("show"),900);
+}
+
+document.addEventListener("keydown",event=>{
+ const action=keyActions[event.key];
+ if(action){
+   event.preventDefault();
+   action();
+   return;
+ }
+ if(event.key==="F11"){
+   event.preventDefault();
+   showKeyStatus("Fullscreen");
+ }
+});
+
+/* Hardware-only keys.
+   These are intentionally not simulated in the browser:
+   - Power button: native OS power manager
+   - Sleep/wake: native OS power manager
+   - Hardware lid close: native OS power manager
+*/
+function handleNativePowerEvent(action){
+ window.dispatchEvent(new CustomEvent("sparkos-power",{detail:{action}}));
+}
+window.handleNativePowerEvent=handleNativePowerEvent;
+
 function updateClock(){
  const now=new Date();
  document.getElementById("time").textContent=now.toLocaleTimeString([], {hour:"2-digit",minute:"2-digit"});
