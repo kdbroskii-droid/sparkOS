@@ -1,0 +1,12 @@
+[Unit]
+Description=SparkOS first boot setup
+After=network.target
+ConditionPathExists=!/var/lib/sparkos/.firstboot-done
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/sbin/sparkos-firstboot
+RemainAfterExit=yes
+
+[Install]
+WantedBy=multi-user.target
