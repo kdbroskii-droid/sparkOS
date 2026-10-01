@@ -1,45 +1,125 @@
 name: Build bootable SparkOS
+
 on:
   workflow_dispatch:
   push:
     branches: [main]
+
+permissions:
+  contents: read
+
 jobs:
   build:
     runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@v4
-      - name: Install live-build
+      - name: Check out SparkOS
+        uses: actions/checkout@v4
+
+      - name: Show runner information
         run: |
-          sudo apt-get update
-          sudo apt-get install -y live-build
-      - name: Prepare SparkOS desktop
+          set -eux
+          uname -a
+          docker --version
+          df -h
+
+      - name: Prepare SparkOS desktop files
         run: |
+          set -eux
+          test -d html
           mkdir -p config/includes.chroot/usr/share/sparkos/desktop
           cp html/*.html html/*.css html/*.js config/includes.chroot/usr/share/sparkos/desktop/
           chmod +x config/hooks/live/0100-spark-user.hook.chroot
           chmod +x config/includes.chroot/usr/local/bin/sparkos-desktop
           chmod +x config/includes.chroot/usr/local/sbin/sparkos-firstboot
           mkdir -p config/includes.chroot/etc/systemd/system/multi-user.target.wants
-          ln -sf /etc/systemd/system/sparkos-firstboot.service config/includes.chroot/etc/systemd/system/multi-user.target.wants/sparkos-firstboot.service
-      - name: Configure image
+          ln -sf /etc/systemd/system/sparkos-firstboot.service \
+            config/includes.chroot/etc/systemd/system/multi-user.target.wants/sparkos-firstboot.service
+          test -f config/includes.chroot/usr/share/sparkos/desktop/desktop-test.html
+          test -x config/hooks/live/0100-spark-user.hook.chroot
+          test -x config/includes.chroot/usr/local/bin/sparkos-desktop
+          test -x config/includes.chroot/usr/local/sbin/sparkos-firstboot
+
+      - name: Build Debian Trixie ISO inside Debian
+        shell: bash
         run: |
-          lb config \
-            --distribution trixie \
-            --architectures amd64 \
-            --binary-images iso-hybrid \
-            --archive-areas "main contrib non-free-firmware" \
-            --bootappend-live "boot=live components" \
-            --debian-installer false
-      - name: Build ISO
-        run: sudo lb build
-      - name: Rename image
-        run: |
-          mv live-image-amd64.hybrid.iso SparkOS-amd64-UEFI.iso
-          sha256sum SparkOS-amd64-UEFI.iso > SparkOS-amd64-UEFI.iso.sha256
-      - name: Upload bootable image
+          set -euxo pipefail
+          rm -f build.log SparkOS-amd64-UEFI.iso SparkOS-amd64-UEFI.iso.sha256
+
+          docker run --privileged --rm \
+            -v "$GITHUB_WORKSPACE:/workspace" \
+            -w /workspace \
+            debian:trixie \
+            bash -euxo pipefail -c '
+              export DEBIAN_FRONTEND=noninteractive
+
+              apt-get update
+              apt-get install -y --no-install-recommends \
+                live-build \
+                debootstrap \
+                ca-certificates \
+                xz-utils \
+                xorriso \
+                squashfs-tools \
+                grub-pc-bin \
+                grub-efi-amd64-bin \
+                mtools \
+                dosfstools \
+                isolinux \
+                syslinux-common
+
+              echo "== live-build version =="
+              lb --version
+
+              echo "== package availability =="
+              while read -r pkg; do
+                [ -z "$pkg" ] && continue
+                apt-cache show "$pkg" >/dev/null
+                echo "OK: $pkg"
+              done < config/package-lists/sparkos.list.chroot
+
+              echo "== clean =="
+              lb clean --purge || true
+              rm -rf config/binary config/chroot config/common config/bootstrap config/source
+
+              echo "== configure =="
+              lb config \
+                --mode debian \
+                --system live \
+                --distribution trixie \
+                --architectures amd64 \
+                --binary-images iso-hybrid \
+                --archive-areas "main contrib non-free non-free-firmware" \
+                --mirror-bootstrap "http://deb.debian.org/debian" \
+                --mirror-chroot "http://deb.debian.org/debian" \
+                --mirror-binary "http://deb.debian.org/debian" \
+                --bootappend-live "boot=live components" \
+                --debian-installer false
+
+              echo "== build =="
+              lb build 2>&1 | tee /workspace/build.log
+
+              echo "== output =="
+              ls -lah
+              test -f live-image-amd64.hybrid.iso
+              mv live-image-amd64.hybrid.iso SparkOS-amd64-UEFI.iso
+              sha256sum SparkOS-amd64-UEFI.iso > SparkOS-amd64-UEFI.iso.sha256
+              ls -lh SparkOS-amd64-UEFI.iso SparkOS-amd64-UEFI.iso.sha256
+            '
+
+      - name: Upload ISO
+        if: success()
         uses: actions/upload-artifact@v4
         with:
           name: SparkOS-amd64-UEFI
+          if-no-files-found: error
           path: |
             SparkOS-amd64-UEFI.iso
             SparkOS-amd64-UEFI.iso.sha256
+
+      - name: Upload build log
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: SparkOS-build-log
+          if-no-files-found: warn
+          path: build.log
