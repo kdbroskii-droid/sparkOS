@@ -33,3 +33,5 @@ html,body{margin:0;width:100%;height:100%;overflow:hidden;font-family:Arial,sans
 .start-menu.open{display:block}.start-title{margin:0 0 20px 4px;font-size:21px}.start-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}.start-app{height:92px;border:0;border-radius:13px;background:rgba(255,255,255,.05);color:#fff;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px}.start-app:hover{background:rgba(255,255,255,.1)}
 .clock{position:absolute;right:18px;bottom:25px;z-index:21;text-align:right;font-size:12px;line-height:1.35;color:#dce3ea}.clock span{display:block}
 @media(max-width:650px){.taskbar{bottom:8px;height:58px;width:calc(100vw - 16px)}.task-button{width:42px;height:42px}.zap{width:44px;height:44px}.start-menu{bottom:74px}.start-grid{grid-template-columns:repeat(2,1fr)}.desktop-icons{left:10px;top:10px}}
+
+.key-status{position:absolute;left:50%;top:18px;transform:translateX(-50%);z-index:50;padding:9px 15px;border-radius:10px;background:rgba(30,36,44,.94);border:1px solid rgba(255,255,255,.1);color:#fff;font-size:13px;opacity:0;pointer-events:none;transition:opacity .12s}.key-status.show{opacity:1}
