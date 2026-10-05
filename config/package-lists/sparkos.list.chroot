@@ -23,3 +23,5 @@ upower
 dbus-user-session
 firmware-linux
 fonts-dejavu
+qemu-system-x86
+qemu-utils
