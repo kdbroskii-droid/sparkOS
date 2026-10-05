@@ -36,6 +36,8 @@ jobs:
           cp sparkOS/gaming/gaming.json config/includes.chroot/etc/sparkos/gaming.json
           cp sparkOS/gaming/sparkboost-auto.service config/includes.chroot/etc/systemd/system/sparkboost-auto.service
           cp sparkOS/virtual-machines/second-pc-manager.py config/includes.chroot/usr/local/bin/second-pc-manager
+          mkdir -p config/includes.chroot/etc/systemd/system/multi-user.target.wants
+          ln -sf /etc/systemd/system/sparkboost-auto.service config/includes.chroot/etc/systemd/system/multi-user.target.wants/sparkboost-auto.service
           chmod +x config/includes.chroot/usr/local/bin/sparkboost
           chmod +x config/includes.chroot/usr/local/bin/sparkboost-auto
           chmod +x config/includes.chroot/usr/local/bin/second-pc-manager
