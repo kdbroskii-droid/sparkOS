@@ -1,0 +1,9 @@
+{
+  "name": "SparkOS Second PC",
+  "ram_mb": 2048,
+  "cpus": 2,
+  "disk_gb": 32,
+  "network": "sparklink",
+  "shared_clipboard": false,
+  "shared_files": false
+}
