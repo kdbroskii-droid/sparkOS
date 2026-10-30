@@ -14,7 +14,7 @@ pub enum Key {
     Tab, Enter, Escape, Space, F4, F5, F11, Left, Right, Up, Down,
 }
 
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Default)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Default)]
 pub struct Modifiers {
     pub super_key: bool,
     pub ctrl: bool,
