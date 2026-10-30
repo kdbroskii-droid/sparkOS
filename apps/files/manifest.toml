@@ -1,0 +1,9 @@
+id = "files"
+name = "Files"
+version = "0.1.0"
+kind = "native-app"
+launch = "on-demand"
+default_pinned = true
+capabilities = ["filesystem.read", "filesystem.write-with-user-confirmation"]
+status = "specification-only"
+description = "Browse folders, open files, and manage user documents."
