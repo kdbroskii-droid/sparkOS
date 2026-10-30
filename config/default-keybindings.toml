@@ -4,26 +4,26 @@
 # Search+Tab+A is reserved for the future Code development exit sequence; inactive for now.
 
 [apps]
-"Super+Space" = "open-launcher"
-"Super+E" = "launch:files"
+"Search+Space" = "open-launcher"
+"Search+E" = "launch:files"
 "Search+C" = "launch:chrome"
-"Super+S" = "launch:settings"
-"Super+I" = "launch:spark-ai"
-"Super+T" = "launch:terminal"
-"Super+1..9" = "launch-pinned-slot:1..9"
+"Search+S" = "launch:settings"
+"Search+I" = "launch:spark-ai"
+"Search+T" = "launch:terminal"
+"Search+1..9" = "launch-pinned-slot:1..9"
 
 [windows]
 "Alt+F4" = "close-focused-window"
 "Alt+Tab" = "switch-window"
 "F11" = "toggle-maximize"
-"Super+Tab" = "open-task-view"
-"Super+D" = "show-desktop"
-"Super+Left" = "previous-workspace"
-"Super+Right" = "next-workspace"
+"Search+Tab" = "open-task-view"
+"Search+D" = "show-desktop"
+"Search+Left" = "previous-workspace"
+"Search+Right" = "next-workspace"
 
 [system]
-"Super+Q" = "quick-settings"
-"Super+N" = "notifications"
+"Search+Q" = "quick-settings"
+"Search+N" = "notifications"
 
 [mouse]
 "Left" = "activate-pointer-target"
