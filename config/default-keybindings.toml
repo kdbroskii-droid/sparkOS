@@ -1,10 +1,12 @@
 # SparkOS default keyboard shortcuts (human-readable source of truth).
-# Super means the OS/Windows key. Bindings are intended to be user-configurable.
+# Chromebook Search is treated as the SparkOS launcher modifier (Search/Super).
+# Bindings are intended to be user-configurable.
+# Search+Tab+A is reserved for the future Code development exit sequence; inactive for now.
 
 [apps]
 "Super+Space" = "open-launcher"
 "Super+E" = "launch:files"
-"Super+B" = "launch:browser"
+"Search+C" = "launch:chrome"
 "Super+S" = "launch:settings"
 "Super+I" = "launch:spark-ai"
 "Super+T" = "launch:terminal"
