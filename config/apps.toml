@@ -12,10 +12,14 @@ name = "Settings"
 category = "system"
 pinned_default = true
 
-[browser]
-name = "Browser"
+[chrome]
+name = "Google Chrome"
 category = "internet"
 pinned_default = true
+launch_policy = "verified-installed-app"
+
+# SparkOS does not bundle Google Chrome. The app manager must detect a compatible
+# official installation and show a clear unavailable message when none exists.
 
 [terminal]
 name = "Terminal"
