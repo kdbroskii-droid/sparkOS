@@ -1,62 +1,68 @@
 # SparkOS architecture
 
-## Design direction
+## Direction
 
-SparkOS is a Linux distribution with its own native desktop and system services. It is not a web page running in kiosk mode.
+SparkOS is intended to be an independent operating system with its own kernel and native system stack. Debian or another general-purpose Linux distribution must not be the product's base. The current Debian live-build files are temporary scaffolding and must be replaced; they are not proof of an independent OS.
 
-The operating system is split into a small base and optional services. The base must boot, provide storage/network access, detect hardware, and recover cleanly without starting Android, Windows compatibility, gaming analysis, or AI workloads.
+The first real milestone is a minimal kernel that boots in a virtual machine, emits diagnostic output, and displays the SparkOS logo/startup sequence when the graphics path is ready. Preserve the existing logo and startup animation from the archived branch if their source assets can be recovered and licensed for reuse.
 
-## Proposed layers
+## Layer plan
 
-| Layer | Responsibility | Initial status |
+| Layer | Responsibility | Status |
 |---|---|---|
-| Firmware and boot | Chromebook firmware, UEFI boot, Linux kernel, initramfs | Phase 1 |
-| Base system | Debian userspace, systemd, filesystem, networking | Phase 1 |
-| Hardware service | CPU/GPU/RAM/storage/display/network detection | Phase 1 diagnostics |
-| Native desktop | Wayland compositor, shell, SparkBar, launcher, settings | Planned |
-| Application manager | Native Linux packages and app metadata | Planned |
-| Android runtime | Waydroid evaluation, APK install/launch | Planned; kernel and ABI gated |
-| Windows compatibility | Wine/Proton prefixes and app profiles | Planned; per-app testing |
-| Spark AI | Local inference service, local model library, permission broker | Planned |
-| Spark Storage | Storage analysis and confirmed cleanup operations | Planned |
-| Spark Gaming | Game detection, monitoring, reversible tuning | Planned |
-| Spark Neural Graphics | Capability detection and supported rendering integrations | Research/planned |
+| Boot | Firmware handoff, bootloader, kernel entry, diagnostics | Planned |
+| Kernel | Memory management, interrupts, timers, scheduler, drivers, system calls | Not implemented |
+| Base services | Storage, process/service lifecycle, networking, device discovery | Planned |
+| Native desktop | Lightweight compositor, shell, launcher, settings | Planned |
+| Application manager | Native application packaging and lifecycle | Planned |
+| Android compatibility | Android runtime and ABI/graphics integration | Research/planned |
+| Windows compatibility | App compatibility layer and per-app profiles | Research/planned |
+| Spark AI | Local inference engine, model library, permission broker | Planned |
+| Spark Gaming | Game detection and reversible performance settings | Planned |
+| Spark Neural Graphics | Supported GPU/graphics APIs and tested integrations | Research/planned |
 
-## Spark AI: independent local system
+## RAM-first policy
 
-Spark AI is a SparkOS subsystem, not a thin client for another company's AI API.
+SparkOS targets a 4 GB RAM Chromebook, and memory usage takes priority over reducing disk usage.
 
-Its planned components are:
+- Minimise resident kernel and base-system memory without compromising correctness.
+- Avoid unnecessary background daemons and duplicate services.
+- Make optional subsystems demand-started and stoppable.
+- Bound caches; free temporary allocations and graphics buffers promptly.
+- Use shared memory/buffers where safe and supported.
+- Load AI models only on demand and unload them when idle or under memory pressure.
+- Keep indexing, telemetry, update scans, game monitoring, Android, and Windows helpers off unless explicitly needed.
+- Avoid memory overcommit assumptions that can cause system-wide failure.
+- Design clear low-memory behaviour and protect critical kernel/base services.
+- Swap may be offered as a configurable fallback, but must not be used to hide poor RAM use; excessive swap can make the device feel unusably slow.
+- Measure memory at boot, at idle desktop, and with each optional subsystem enabled. Record both resident memory and peak memory.
+- Do not publish a RAM target as achieved until it has been measured on a reproducible build.
 
-- **Inference engine:** a locally running, replaceable inference backend.
-- **Model library:** SparkOS-managed catalogue of locally stored models, model metadata, checksums, versions, and hardware requirements.
-- **Model manager:** explicit download, verification, selection, update, and removal.
-- **System context service:** read-only, structured information from approved SparkOS services.
-- **Action broker:** permission-gated operations with preview and confirmation for consequential changes.
-- **User interface:** conversation and command interface, loaded only when requested.
+Disk space is secondary: larger optional packages, model downloads, logs, and caches can live on storage if that reduces resident memory, provided the system remains responsive and storage writes are controlled.
 
-The 4 GB target makes large local models impractical. Phase 1 must not ship a model or keep an inference process resident. Later model choices must be benchmarked on the actual device, and the assistant must explain when a task exceeds local hardware capacity.
+## Spark AI
 
-No cloud AI provider is required by the core design. Optional remote providers are outside the requested core architecture and are not part of the initial implementation.
+Spark AI is a first-party local subsystem, not merely a client for an external AI API.
 
-## Desktop direction
+Planned components:
 
-The future desktop should use native Linux windowing and system APIs. A Wayland compositor is preferred, subject to testing on the Intel UHD 600. The shell, launcher, taskbar, settings, notifications, and quick settings should communicate with system services through documented local interfaces.
+- Local inference engine with a documented internal interface.
+- SparkOS-managed model library with model metadata, architecture requirements, checksums, and version tracking.
+- Model manager for explicit installation, verification, selection, update, and removal.
+- Approved system-context interface.
+- Permission broker for actions that change system state.
+- UI started only when requested.
 
-Visual effects must have a reduced-effects mode. Blur and translucency are optional and must never be required for usability.
+Do not ship a large model by default. Benchmark small models on target hardware, load models on demand, and explain when local hardware cannot handle a task. No model or inference capability is considered implemented until it runs locally and has tests.
 
-## Resource policy
+## Logo and startup
 
-- Start only essential services.
-- Start Android, Wine helpers, Spark AI, and game monitoring on demand.
-- Put memory and CPU limits on optional services.
-- Keep caches bounded and disposable.
-- Avoid persistent writes to removable SD storage unless the user selects it.
-- Reserve memory for the desktop and kernel before optional workloads.
-- Never kill essential services as a gaming optimisation.
+Recover the existing SparkOS logo and startup assets from the archived branch before creating replacements. The boot sequence should be lightweight, avoid starting a full graphical stack just to show branding, and fall back to readable diagnostic output if graphics are unavailable.
 
-## Compatibility policy
+## Compatibility
 
-APK and EXE are package formats, not compatibility guarantees. Each runtime must report its architecture, graphics, kernel, and dependency requirements. Every application marked supported must have a reproducible test record.
+APK and EXE are formats, not compatibility guarantees. Each runtime requires explicit architecture, driver, kernel, and dependency support. Mark applications as supported only when there is a reproducible test.
 
-Spark Neural Graphics may only expose features implemented through supported drivers, APIs, or application integrations. It must not claim to alter arbitrary games or reproduce proprietary console hardware features.
+## Build integrity
+
+The current Debian-based live-build configuration does not meet the independent-kernel goal. Do not label its ISO as the finished independent SparkOS. Replace that path with a documented kernel build and boot test before claiming the core OS is operational.
