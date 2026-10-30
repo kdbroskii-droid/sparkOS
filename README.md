@@ -60,3 +60,10 @@ Android, Windows apps, local AI inference, and advanced GPU features are not imp
 The current Phase 1 build files still describe a Debian-based Linux image and therefore do not yet satisfy the independent-kernel requirement. They are scaffolding to be replaced, not the intended final design. No successful independent-kernel boot or memory benchmark is claimed yet.
 
 See [architecture](docs/architecture.md) and [RAM budget](docs/memory-budget.md).
+
+
+## First app and desktop specifications
+
+The initial app IDs are Files, Google Chrome, Settings, and Terminal. Their registry is `config/apps.toml`; per-app contracts are under `apps/`. The planned Settings categories are in `config/settings-sections.toml`, with design notes in [docs/settings-app.md](docs/settings-app.md). Chromebook key mappings and app routing are documented in [docs/input-and-app-launching.md](docs/input-and-app-launching.md). The safe install sequence is in [docs/chromebook-installation-plan.md](docs/chromebook-installation-plan.md).
+
+**Status warning:** app manifests, settings definitions, and shortcut routing are scaffolding only. The native apps, bootable independent kernel, desktop/session manager, and actual install image are not yet implemented. Do not erase ChromeOS based on this repository's current state.
