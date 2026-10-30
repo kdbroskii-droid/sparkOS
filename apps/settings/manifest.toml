@@ -1,0 +1,10 @@
+id = "settings"
+name = "Settings"
+version = "0.1.0"
+kind = "native-app"
+launch = "on-demand"
+default_pinned = true
+capabilities = ["system-settings.read", "system-settings.write-with-validation"]
+status = "specification-only"
+settings_schema = "config/settings-sections.toml"
+description = "Configure SparkOS using a lightweight native interface."
