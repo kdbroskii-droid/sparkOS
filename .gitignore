@@ -1,0 +1,21 @@
+# Build output
+/out/
+/build/
+/.chroot/
+/.binary/
+/.cache/
+
+# Generated live-build state
+/config/binary
+/config/bootstrap
+/config/chroot
+/config/common
+/config/source
+
+# Local development
+*.log
+*.iso
+*.iso.sha256
+*.swp
+*~
+.DS_Store

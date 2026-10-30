@@ -1,0 +1,49 @@
+name: Build SparkOS Phase 1
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Build Debian live image
+        shell: bash
+        run: |
+          set -Eeuo pipefail
+          docker run --privileged --rm \
+            -v "$GITHUB_WORKSPACE:/workspace" \
+            -w /workspace \
+            debian:trixie \
+            bash -Eeuo pipefail -c '
+              export DEBIAN_FRONTEND=noninteractive
+              apt-get update
+              apt-get install -y --no-install-recommends \
+                live-build debootstrap ca-certificates xorriso \
+                squashfs-tools grub-pc-bin grub-efi-amd64-bin \
+                mtools dosfstools syslinux-common isolinux
+              chmod +x scripts/build-iso.sh
+              ./scripts/build-iso.sh
+            '
+
+      - name: Verify image checksum
+        run: |
+          cd out
+          sha256sum --check SparkOS-amd64-phase1.iso.sha256
+
+      - name: Upload bootable image
+        uses: actions/upload-artifact@v4
+        with:
+          name: SparkOS-amd64-phase1
+          if-no-files-found: error
+          path: |
+            out/SparkOS-amd64-phase1.iso
+            out/SparkOS-amd64-phase1.iso.sha256
