@@ -9,7 +9,7 @@ use std::collections::BTreeMap;
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord)]
 pub enum Key {
-    A, B, D, E, F, I, L, M, N, Q, R, S, T, W,
+    A, B, C, D, E, F, I, L, M, N, Q, R, S, T, W,
     Digit1, Digit2, Digit3, Digit4, Digit5, Digit6, Digit7, Digit8, Digit9,
     Tab, Enter, Escape, Space, F4, F5, F11, Left, Right, Up, Down,
 }
@@ -108,7 +108,7 @@ pub fn default_bindings() -> BTreeMap<KeyStroke, Action> {
 
     b.insert(stroke(Key::Space, super_only), Action::OpenLauncher);
     b.insert(stroke(Key::E, super_only), Action::OpenApp("files"));
-    b.insert(stroke(Key::B, super_only), Action::OpenApp("browser"));
+    b.insert(stroke(Key::C, super_only), Action::OpenApp("chrome"));
     b.insert(stroke(Key::S, super_only), Action::OpenApp("settings"));
     b.insert(stroke(Key::I, super_only), Action::OpenApp("spark-ai"));
     b.insert(stroke(Key::T, super_only), Action::OpenApp("terminal"));
@@ -213,6 +213,17 @@ mod tests {
         fn activate_pointer_target(&mut self)->Result<(),DispatchError>{self.calls.push("activate".into());Ok(())}
         fn show_context_menu(&mut self)->Result<(),DispatchError>{self.calls.push("context".into());Ok(())}
         fn scroll(&mut self,v:i8,h:i8)->Result<(),DispatchError>{self.calls.push(format!("scroll:{v}:{h}"));Ok(())}
+    }
+
+    #[test]
+    fn search_c_launches_chrome_by_id() {
+        let mut shell = FakeShell::default();
+        let handled = dispatch(
+            InputEvent::KeyDown(stroke(Key::C, mods(true,false,false,false))),
+            &default_bindings(), &mut shell
+        ).unwrap();
+        assert!(handled);
+        assert_eq!(shell.calls, vec!["app:chrome"]);
     }
 
     #[test]
