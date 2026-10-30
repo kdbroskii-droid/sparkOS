@@ -1,8 +1,8 @@
 # SparkOS
 
-SparkOS is a lightweight, modular Linux operating system project for x86-64 computers, beginning with the Samsung Chromebook 4 (XE310XBA).
+SparkOS is an independent operating-system project targeting x86-64 computers, beginning with the Samsung Chromebook 4 (XE310XBA). The long-term target is a SparkOS-owned kernel and native system stack, not a Debian-based distribution.
 
-The project is being rebuilt from a clean foundation. The first milestone is a reproducible, bootable Phase 1 image. Desktop features, application runtimes, Spark AI, gaming tools, and advanced graphics work will be added only after the base image boots and hardware is verified.
+The repository is being rebuilt incrementally. The current Phase 1 Debian live-build configuration is temporary build scaffolding and does **not** meet the independent-kernel goal. It must not be presented as the finished SparkOS architecture. The next foundation milestone is a minimal independently built kernel that boots and prints a SparkOS startup screen; the old SparkOS logo and startup animation should be preserved from the archived source where possible.
 
 ## Target hardware
 
@@ -12,51 +12,51 @@ The project is being rebuilt from a clean foundation. The first milestone is a r
 - Memory: 4 GB LPDDR4 (soldered)
 - Architecture: x86-64
 
-The device board/HWID must be confirmed on the Chromebook itself before selecting an installation or firmware procedure. Do not infer firmware compatibility from the retail model name alone.
+Confirm the device board/HWID on the Chromebook itself before selecting an installation or firmware procedure. Do not infer firmware compatibility from the retail model name alone.
 
-## Project principles
+## Core principles
 
-1. Build a real operating system, not a browser-based desktop mockup.
-2. Keep the base system small and optional services off until needed.
-3. Detect hardware capabilities rather than hardcoding one machine.
-4. Treat compatibility as something to test, not promise.
-5. Never allow cleanup or AI actions to delete personal data without explicit approval.
-6. Keep Spark AI local-first: its inference engine and model library belong to SparkOS. No third-party AI API is required or used by the core assistant.
-7. Add features incrementally and keep build/test evidence with each milestone.
+1. Build an independent OS, kernel-first; do not make Debian the product's base.
+2. Prioritise minimal RAM consumption over saving disk space.
+3. Start only essential services; start optional components on demand.
+4. Keep the native desktop lightweight and avoid a browser-based desktop.
+5. Spark AI must have its own local inference engine and model library, not just an API wrapper.
+6. Detect hardware capabilities rather than hardcoding one machine.
+7. Treat compatibility as something to test, not promise.
+8. Never delete personal data without explicit approval.
+9. Features are not complete until a reproducible test supports the claim.
 
-## Phase 1
+## RAM-first design
 
-Phase 1 builds a minimal Debian-based live ISO for x86-64 with Linux, firmware, networking, and graphics diagnostics. It is a bootable foundation, not yet the finished desktop OS.
+The main target has 4 GB of physical RAM. RAM efficiency is a first-class requirement; disk capacity is secondary.
 
-See [Phase 1 foundation](docs/phase-1-foundation.md) and [architecture](docs/architecture.md).
+- Keep the kernel, init path, and base services small.
+- Avoid launching a full service manager or background daemon for every feature unless the design proves it necessary.
+- Load drivers and services only when required, where technically safe.
+- Use bounded caches and release temporary buffers promptly.
+- Keep AI, Android compatibility, Windows compatibility, game tools, and indexing stopped until requested.
+- Load AI models on demand; unload them when the user exits Spark AI or memory pressure requires it.
+- Avoid duplicated texture, image, and model buffers; prefer shared buffers where supported.
+- Provide memory-pressure reporting and graceful low-memory behaviour.
+- Treat swap as a safety mechanism, not a substitute for RAM; make it configurable and avoid constant swapping.
+- Measure idle boot RAM, desktop idle RAM, and each optional feature separately on real hardware.
 
-## Build
+No RAM figures are claimed until measured on a booted build. The target is to minimise idle memory while retaining stability and usable graphics.
 
-On a Debian 13 (Trixie) build host with live-build installed:
+## Development milestones
 
-```bash
-sudo apt-get update
-sudo apt-get install -y live-build debootstrap ca-certificates xorriso squashfs-tools grub-pc-bin grub-efi-amd64-bin mtools dosfstools syslinux-common isolinux
-sudo ./scripts/build-iso.sh
-```
+1. Independent bootable kernel and SparkOS boot screen.
+2. Memory allocator, interrupt handling, timers, serial/debug output, and basic hardware discovery.
+3. RAM-first base services, storage, and networking.
+4. Lightweight native graphical stack.
+5. Spark AI local inference engine and model library.
+6. Android and Windows compatibility research and implementation.
+7. GPU acceleration, gaming support, and optional graphics features.
 
-The ISO and checksum are written to `out/`.
+Android, Windows apps, local AI inference, and advanced GPU features are not implemented merely because they appear on this roadmap.
 
-GitHub Actions runs the same build in a clean Debian container.
+## Current repository status
 
-## Status
+The current Phase 1 build files still describe a Debian-based Linux image and therefore do not yet satisfy the independent-kernel requirement. They are scaffolding to be replaced, not the intended final design. No successful independent-kernel boot or memory benchmark is claimed yet.
 
-- [x] Repository reset with a recoverable archive branch
-- [x] Phase 1 build definition
-- [ ] First successful CI ISO build
-- [ ] Boot test on generic UEFI virtual machine
-- [ ] Chromebook board/HWID confirmation
-- [ ] Hardware boot test
-- [ ] Desktop environment
-- [ ] Native application manager
-- [ ] Android runtime evaluation
-- [ ] Windows compatibility evaluation
-- [ ] Spark AI local runtime and model library
-- [ ] Spark Gaming and Spark Neural Graphics
-
-Features are not considered implemented until they have a working implementation and a reproducible test.
+See [architecture](docs/architecture.md) and [RAM budget](docs/memory-budget.md).
