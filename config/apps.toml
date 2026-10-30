@@ -1,0 +1,35 @@
+# SparkOS stable app IDs and display metadata.
+# Launch targets are IDs, never arbitrary command strings.
+# The session manager resolves each ID to an installed, verified application.
+
+[files]
+name = "Files"
+category = "system"
+pinned_default = true
+
+[settings]
+name = "Settings"
+category = "system"
+pinned_default = true
+
+[browser]
+name = "Browser"
+category = "internet"
+pinned_default = true
+
+[terminal]
+name = "Terminal"
+category = "development"
+pinned_default = false
+
+[spark-ai]
+name = "Spark AI"
+category = "assistant"
+pinned_default = false
+start_on_demand = true
+
+[task-manager]
+name = "Task Manager"
+category = "system"
+pinned_default = false
+start_on_demand = true
