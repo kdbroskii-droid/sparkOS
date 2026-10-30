@@ -1,0 +1,9 @@
+id = "chrome"
+name = "Google Chrome"
+version = "external"
+kind = "external-compatible-app"
+launch = "on-demand"
+default_pinned = true
+capabilities = ["network", "user-selected-files"]
+status = "requires-official-chrome-package-and-compatible-runtime"
+description = "Launch official Google Chrome only; never silently substitute Chromium."
