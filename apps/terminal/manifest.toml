@@ -1,0 +1,9 @@
+id = "terminal"
+name = "Terminal"
+version = "0.1.0"
+kind = "native-app"
+launch = "on-demand"
+default_pinned = false
+capabilities = ["process.spawn-with-policy", "filesystem.read", "filesystem.write-with-confirmation"]
+status = "specification-only"
+description = "Provide a terminal after process isolation and permissions are implemented."
