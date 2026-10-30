@@ -1,0 +1,70 @@
+# SparkOS Settings information architecture. These are specifications, not yet a working GUI.
+# No Ethernet section: the target Chromebook uses Wi-Fi for network settings.
+
+[appearance]
+title = "Appearance"
+items = ["wallpaper", "theme", "accent-colour", "panel-position", "desktop-icons", "animations"]
+
+[display]
+title = "Display"
+items = ["resolution", "scaling", "brightness", "orientation", "refresh-rate-if-supported"]
+
+[keyboard]
+title = "Keyboard"
+items = ["search-key-behaviour", "shortcuts", "key-repeat", "layout", "language"]
+
+[mouse-touchpad]
+title = "Mouse & Touchpad"
+items = ["pointer-speed", "scroll-direction", "tap-to-click", "sensitivity", "button-settings"]
+
+[apps]
+title = "Apps"
+items = ["installed-apps", "default-apps", "startup-apps", "uninstall"]
+
+[network]
+title = "Network"
+items = ["wifi-toggle", "available-networks", "connect-disconnect", "saved-networks", "connection-status", "signal-strength", "proxy-if-supported"]
+
+[sound]
+title = "Sound"
+items = ["output-device", "input-device", "volume", "microphone", "notification-sounds"]
+
+[bluetooth]
+title = "Bluetooth"
+items = ["bluetooth-toggle", "paired-devices", "pair-device", "forget-device"]
+
+[power]
+title = "Power"
+items = ["battery-status-if-present", "screen-timeout", "sleep-behaviour", "power-saving"]
+
+[storage]
+title = "Storage"
+items = ["disk-usage", "temporary-files", "large-files"]
+
+[privacy-security]
+title = "Privacy & Security"
+items = ["screen-lock", "app-permissions", "firewall-status-if-implemented", "security-updates-if-implemented"]
+
+[users]
+title = "Users"
+items = ["accounts-if-supported", "password", "session-options"]
+
+[date-time]
+title = "Date & Time"
+items = ["time-zone", "clock-format", "automatic-time-if-network-time-supported"]
+
+[accessibility]
+title = "Accessibility"
+items = ["text-size", "high-contrast", "screen-reader-if-implemented", "sticky-keys", "pointer-size"]
+
+[spark-ai]
+title = "Spark AI"
+items = ["enable-disable", "installed-local-models", "model-storage", "memory-limit", "unload-model"]
+
+[system]
+title = "System"
+items = ["sparkos-version", "hardware-information", "updates-if-implemented", "diagnostics", "restart", "shutdown"]
+
+[developer]
+title = "Developer"
+items = ["logs", "debugging-if-implemented", "development-mode-status"]
