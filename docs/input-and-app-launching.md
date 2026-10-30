@@ -11,11 +11,11 @@ The routing core is in `components/shell-core`. It converts normalized key and m
 | Shortcut | Action |
 |---|---|
 | Super + Space | Open app launcher |
-| Super + E | Open Files |
-| Super + B | Open Browser |
-| Super + S | Open Settings |
-| Super + I | Open Spark AI on demand |
-| Super + T | Open Terminal |
+| Search + E | Open Files |
+| Search + C | Open Google Chrome (if installed and supported) |
+| Search + S | Open Settings |
+| Search + I | Open Spark AI on demand |
+| Search + T | Open Terminal |
 | Super + 1–9 | Open pinned app in that slot |
 | Alt + F4 | Close focused window |
 | Alt + Tab | Switch windows |
@@ -59,3 +59,14 @@ cargo test --manifest-path components/shell-core/Cargo.toml
 ```
 
 These tests exercise only the routing logic; they do not test hardware drivers, graphical windows, or real app processes.
+
+
+## Chromebook-specific behaviour
+
+The Chromebook Search/Launcher key is treated as the SparkOS global modifier for shortcuts. The exact hardware scancodes must be verified on the target XE310XBA and translated by the future keyboard driver; this config alone does not make the physical key work.
+
+The requested `Search + Tab + A` combination is reserved for leaving the future Code development mode. It is deliberately not active yet because the Code workflow and its state machine have not been implemented. The requested `?/StartCode.co/continue, SparkOS finish |build part, start` and `?/StopCode.co/finish, SparkOS | build part, build` strings are workflow commands, not keybindings; they should be added only when the development-mode command parser exists.
+
+## App availability
+
+The app registry defines Files, Google Chrome, Settings, and Terminal as stable app IDs. Registry entries and shortcut routing are not executable applications. Files, Settings, and Terminal still need native app implementations; Google Chrome must be obtained through an official compatible distribution and cannot be assumed to run on an independent SparkOS kernel until a compatible runtime exists. Missing or unsupported apps must show a useful error rather than pretending to launch.
